@@ -5,7 +5,8 @@ theme: apple-basic
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
-title: Refactoring Go - Patterns and Practices for Maintaining and Evolving Large Codebases
+title: Refactoring Go - Patterns and Practices for Maintaining and Evolving
+  Large Codebases
 info: |
   More info at https://github.com/brittanyellich/refactoring-go
 # https://sli.dev/features/drawing
@@ -43,43 +44,55 @@ Patterns and Practices for Maintaining and Evolving Large Codebases
 
 <!--
 Getting started.
+Welcome.
+Check out the slides at the repo link.
 -->
 
 ---
-transition: slide-left
-layout: image-right
+layout: default
 image: 'images/1.png'
 ---
 
+<div class="flex justify-center">
+    <img src="./images/1.png" alt="A cloudy blob that says 'Your software'" width="500px" />
+</div>
+
 <!--
-This is your system.
+This is your software system.
 -->
 
 ---
-transition: slide-left
-layout: image-right
+layout: default
 image: 'images/2.png'
 ---
+
+<div class="flex justify-center">
+    <img src="./images/2.png" alt="A cloudy blob that says 'Your software' with some bandaids, hair, and smell lines" width="500px" />
+</div>
 
 <!--
 Okay maybe this is more realistic. It's a bit hairy. It has bandaids. It has code smells.
 -->
 
 ---
-transition: slide-left
-layout: image-right
-image: 'images/3.png'
+layout: default
 ---
+
+<div class="flex justify-center">
+    <img src="./images/3.png" alt="A cloudy blob that says 'Your software' with some bandaids, hair, and smell lines, with a box next to it titled 'new feature'" width="500px" />
+</div>
 
 <!--
 Eventually, a feature comes along. Your PM wants something new which requires a significant shift in your application.
 -->
 
 ---
-transition: slide-left
-layout: image-right
-image: 'images/4.png'
+layout: default
 ---
+
+<div class="flex justify-center">
+    <img src="./images/4.png" alt="A cloudy blob that says 'Your software' with some bandaids, hair, and smell lines, with a box next to it titled 'new feature' and an arrow pointing to the cloudy blob" width="500px" />
+</div>
 
 <!--
 You have to integrate it with your system, but you've hit a wall. There's been enough complaints. 
@@ -101,7 +114,7 @@ Someone on your team suggests a full rewrite.
 
 Raise hands?
 
-Today I'm going to show you why that's wrong and what to do instead.
+If you haven't seen this yet, you almost certainly will.
 -->
 
 ---
@@ -145,10 +158,10 @@ transition: slide-left
 
 # What we're going to talk about
 
-- Refactor, don't rebuild (the top 3 arguments and why they're wrong)
-- How to refactor (some principles and a few examples)
-- How to prioritize your refactoring efforts
-- Getting AI to help you
+- Refactor, don't rewrite: The top 3 arguments and why they're wrong
+- How to refactor: A systematic refactoring method
+- How to prioritize your refactoring efforts: Focus on impact
+- Getting AI to help you: How to use agents today
 
 <!--
 Here's what we're going to talk about today
@@ -158,7 +171,7 @@ Here's what we're going to talk about today
 layout: section
 ---
 
-# Refactor, don't rebuild
+# Refactor, don't rewrite
 
 The top 3 arguments and why they're wrong
 
@@ -303,7 +316,7 @@ layout: center
 class: text-center
 ---
 
-# Refactor, don't rebuild.
+# Refactor, don't rewrite.
 
 <p v-click>You don't need a rewrite.</p>
 <p v-click>It will take too long.</p>
@@ -339,21 +352,22 @@ Some principles and a few examples
 layout: default
 ---
 
-# The Refactoring Mindset
+# A Systematic Refactoring Mindset
 
 <ul>
     <li v-click><bold>Start with tests</bold>: A safety net before changing anything</li>
     <li v-click><bold>Focus on error handling</bold>: This affects the rest of your application's structure</li>
     <li v-click><bold>Break interfaces</bold>: These define your system's boundaries</li>
-    <li v-click><bold>Remove dependencies</bold>: Reduce hard-coding, use dependency injection</li>
+    <li v-click><bold>Reduce dependencies</bold>: Reduce hard-coding, use dependency injection</li>
 </ul>
 
 <p v-click><bold>Small steps win</bold>: Continuous improvement > dramatic changes</p>
 
 <!--
-- Start with tests: Add characterization tests to capture current behavior, then refactor with confidence from Working Effectively with Legacy Code by Michael Feathers
-- Focus on error-handling:
-
+- Start with tests: These are a guide through the entire refactoring process. Add characterization tests to capture current behavior, then refactor with confidence from Working Effectively with Legacy Code by Michael Feathers
+- Focus on error-handling: Error handling, particularly with Go, is critical to overall application structure.
+- Break interfaces: This allows you to focus on your application's boundaries
+- Reduce dependencies: Reduce hard-coding, use dependency injection
 - Small steps win
 - Preserve knowledge - encapsulate "messy" code in tests and sequester in functions
 - Continuous improvement - Do this alongside feature work, don't wait for refactoring sprints
@@ -363,16 +377,16 @@ layout: default
 layout: section
 ---
 
-# Go Code Smells
+# Systematic Go Refactoring Examples
 
 <ol>
     <li>1. Error handling </li>
     <li>2. Large interfaces</li>
-    <li>3. Tightly coupled models</li>
-    <li>4. Empty interface overuse</li>
-    <li>5. Excessive parameter lists</li>
-    <li>6. Hard-coded business rules</li>
-    <li>7. Dependency management anti-patterns</li>
+    <li>3. Empty interface overuse</li>
+    <li>6. Tightly coupled models</li>
+    <li>4. Hard-coded business rules</li>
+    <li>5. Dependency management anti-patterns</li>
+    <li>7. Excessive parameter lists</li>
 </ol>
 
 ---
@@ -394,6 +408,7 @@ return fmt.Errorf("process payment: invalid amount %.2f", amount)
 **Go Proverb**: "Errors are values" - program with them, don't just check them
 
 <!--
+Critical for application structure and for your debugging experience
 Reading: "100 Go Mistakes" #49-52 on error handling patterns
 -->
 
@@ -433,6 +448,29 @@ Reading: Go Proverbs talk, "100 Go Mistakes" #5-7 on interface design
 transition: slide-left
 ---
 
+# Overuse of empty interface{} weakening type safety
+
+**The Problem**: Using any/interface{} when specific types would be better
+
+```go
+// Bad: Runtime type checking required
+func Process(data interface{}) error
+
+// Good: Specific interfaces or generics
+func Process[T Processor](data T) error
+```
+
+**Go Proverb**: "The empty interface says nothing"
+
+<!--
+Catches errors at compile time instead of runtime
+Reading: "100 Go Mistakes" #8 on any usage
+-->
+
+---
+transition: slide-left
+---
+
 # Tightly coupled models mixing concerns
 
 **The Problem**: Single structs mixing API responses, database, and validation concerns
@@ -465,57 +503,6 @@ Mixed concerns make evolution painful. Changing JSON structure shouldn't require
 Reading: Clean Architecture principles, Domain-Driven Design
 -->
 
----
-transition: slide-left
----
-
-# Overuse of empty interface{} weakening type safety
-
-**The Problem**: Using any/interface{} when specific types would be better
-
-```go
-// Bad: Runtime type checking required
-func Process(data interface{}) error
-
-// Good: Specific interfaces or generics
-func Process[T Processor](data T) error
-```
-
-**Go Proverb**: "The empty interface says nothing"
-
-<!--
-Catches errors at compile time instead of runtime
-Reading: "100 Go Mistakes" #8 on any usage
--->
-
----
-transition: slide-left
----
-
-# Excessive parameter lists reducing readability
-
-**The Problem**: Functions become unreadable and error-prone
-
-```go
-// Bad: Too many parameters
-func ProcessOrder(customerID string, items []string, quantities []int, 
-                 prices []float64, discountRate float64, shippingMethod string,
-                 taxRate float64) error
-
-// Good: Meaningful structs
-type OrderRequest struct {
-    CustomerID string
-    Items      []OrderItem
-    Shipping   ShippingInfo
-    Pricing    PricingRules
-}
-func ProcessOrder(req OrderRequest) error
-```
-
-<!--
-Go doesn't have named parameters, making long parameter lists especially problematic
-Reading: "100 Go Mistakes" #11 on functional options pattern
--->
 
 ---
 transition: slide-left
@@ -569,6 +556,39 @@ func (s *OrderService) ProcessOrder(req OrderRequest) error
 <!--
 
 -->
+
+---
+transition: slide-left
+---
+
+# Excessive parameter lists reducing readability
+
+**The Problem**: Functions become unreadable and error-prone
+
+```go
+// Bad: Too many parameters
+func ProcessOrder(customerID string, items []string, quantities []int, 
+                 prices []float64, discountRate float64, shippingMethod string,
+                 taxRate float64) error
+
+// Good: Meaningful structs
+type OrderRequest struct {
+    CustomerID string
+    Items      []OrderItem
+    Shipping   ShippingInfo
+    Pricing    PricingRules
+}
+func ProcessOrder(req OrderRequest) error
+```
+
+<!--
+Go doesn't have named parameters, making long parameter lists especially problematic
+Reading: "100 Go Mistakes" #11 on functional options pattern
+-->
+
+
+
+
 
 ---
 layout: section
@@ -671,17 +691,27 @@ Would this be a talk in 2025 if I didn't mention AI?
 -->
 
 ---
-layout: image-right
-image: 'images/coding-agent.webp'
+layout: default
 ---
 
 # Coding agent use cases
 
-<ul>
-    <li v-click>Increasing test coverage</li>
-    <li v-click>Searching your codebase to find inconsistent approaches</li>
-    <li v-click>Taking patterns and applying them across your codebase incrementally</li>
-</ul>
+<div class="flex">
+    <div>
+        <ul>
+            <li v-click>Increasing test coverage</li>
+            <li v-click>Searching your codebase to find inconsistent approaches</li>
+            <li v-click>Taking patterns and applying them across your codebase incrementally</li>
+        </ul>
+    </div>
+    <div style="width: 70%">
+        <img src="./images/coding-agent.webp" alt="GitHub Copilot coding agent" />
+    </div>
+</div>
+
+
+
+
 
 <!--
 An aside: I'm not here to sell you all on Copilot. That's not my job. But this is the tool I've used the most.
@@ -736,10 +766,10 @@ layout: section
 
 # Recap
 
-- Refactor, don't rebuild
-- How to refactor: First tests, then error handling, then interfaces
-- How to prioritize: First high impact, low effort; then high impact, high effort
-- Get AI to help you (this is a great use case for AI!)
+- Refactor, don't rewrite: The top 3 arguments and why they're wrong
+- How to refactor: A systematic refactoring method
+- How to prioritize your refactoring efforts: Focus on impact
+- Getting AI to help you: How to use agents today
 
 ---
 layout: section
@@ -750,6 +780,7 @@ layout: section
 - Book: Working Effectively with Legacy Code - Michael Feathers
 - Book: 100 Go Mistakes - Teiva Harsanyi
 - Video: [Go Proverbs](https://go-proverbs.github.io/)
+- Article: [GitHub blog article once posted]()
 
 ---
 layout: center
