@@ -32,7 +32,7 @@ Patterns and Practices for Maintaining and Evolving Large Codebases
 
 <div class="absolute bottom-10">
   <span class="font-700">
-    Brittany Ellich | <a href="https://brittanyellich.com" target="_blank">brittanyellich.com</a>
+    Brittany Ellich, GitHub | <a href="https://brittanyellich.com" target="_blank">brittanyellich.com</a>
   </span>
 </div>
 
@@ -110,9 +110,9 @@ image: 'images/4.png'
 <p v-click>Does this sound familiar?</p>
 
 <!--
-Someone on your team suggests a full rewrite.
+Someone on your team (maybe you) suggests a full rewrite, a brand new application.
 
-Raise hands?
+Raise your hand. [Pause]
 
 If you haven't seen this yet, you almost certainly will.
 -->
@@ -140,14 +140,14 @@ layout: intro
 
 Patterns and Practices for Maintaining and Evolving Large Codebases
 
-## Brittany Ellich
+## Brittany Ellich, GitHub
 
 [brittanyellich.com](https://brittanyellich.com)
 
 <!--
 Welcome to my talk: Refactoring Go - Patterns and Practices for Maintaining and Evolving Large Codebases
 
-Hello my name is Brittany Ellich - Software engineer, speaker, and educator helping developers build better software, stronger careers, and a more inclusive tech industry.
+Hello my name is Brittany Ellich - Software engineer at GitHub, speaker, and educator helping developers build better software, stronger careers, and a more inclusive tech industry.
 
 -->
 
@@ -237,6 +237,21 @@ And, oh yeah, you have to move all that data over and decommission the old app
 
 ---
 transition: slide-left
+layout: image-right
+image: 'images/14.png'
+---
+
+# 2. We will move faster with clean code.
+
+
+<!--
+Folks think they'll be able to clean everything up and it will get into a perfectly clean state with no problems.
+-->
+
+---
+transition: slide-left
+layout: image-right
+image: 'images/15.png'
 ---
 
 # 2. We will move faster with clean code.
@@ -247,10 +262,14 @@ transition: slide-left
     <li>"The new code will be so much cleaner and more maintainable"</li>
 </ul>
 
+<!--
 
+-->
 
 ---
 transition: slide-left
+layout: image-right
+image: 'images/16.png'
 ---
 
 # 2. We will move faster with clean code.
@@ -275,6 +294,8 @@ Accumulated complexity serves users: Every seemingly unnecessary feature exists 
 
 ---
 transition: slide-left
+layout: image-right
+image: 'images/17.png'
 ---
 
 # 3. The current technology stack is holding us back.
@@ -290,15 +311,17 @@ A lot of times these efforts come with an excuse for the team to learn a new tec
 
 It's easy to learn a new technology, but hard to learn it well. That learning is going to be an undertaking on its own. 
 
-These suggestions are also often "promotion" projects to rewrite and learn a new technology.
+While I love a greenfield project as much as the next engineer...
 
-But refactoring a legacy codebase is arguably much more technically interesting. 
+Refactoring a legacy codebase is arguably much more technically interesting. 
 
 I argue it's more impactful to modernize a legacy codebase in less time and a technology the team is already familiar with than to rewrite a brand new one.
 -->
 
 ---
 transition: slide-left
+layout: image-right
+image: 'images/18.png'
 ---
 
 # 3. The current technology stack is holding us back.
@@ -322,7 +345,6 @@ class: text-center
 <p v-click>It will take too long.</p>
 <p v-click>All production applications are messy.</p>
 <p v-click>You won't suddenly work better by adopting a new technology.</p>
-<p v-click>The best software products emerge from continuous improvement, not perfect planning.</p>
 
 <!--
 There are some cases where a rebuild makes sense. But if you can't clearly articulate why a rebuild is necessary, refactor instead.
@@ -331,6 +353,15 @@ You probably don't need a rewrite.
 It will probably take too long.
 Your production application will not be the perfect, bug-free, clean-code space you think it will be.
 You won't suddenly work better by adopting a new technology.
+-->
+
+---
+layout: quote
+---
+
+# The best software products emerge from continuous improvement, not perfect planning.
+
+<!--
 Agile > Waterfall
 -->
 
@@ -346,56 +377,68 @@ layout: section
 
 # How to refactor
 
-Some principles and a few examples
+A systematic refactoring method
+
+---
+transition: slide-left
+layout: image-right
+image: 'images/19.png'
+---
+
+# THINK: A Systematic Refactoring Mindset
+
+<ul>
+    <li v-click><bold>Tests</bold>: A safety net before changing anything</li>
+    <li v-click><bold>Handle errors</bold>: This affects the rest of your application's structure</li>
+    <li v-click><bold>Interfaces</bold>: These define your system's boundaries</li>
+    <li v-click><bold>Narrow dependencies</bold>: Remove library dependencies (where possible), reduce hard-coding, use dependency injection</li>
+    <li v-click><bold>Keep improving</bold>: Continuous improvement > dramatic changes</li>
+</ul>
+
+<!--
+- Tests: A safety net before changing anything These are a guide through the entire refactoring process. Add characterization tests to capture current behavior, then refactor with confidence from Working Effectively with Legacy Code by Michael Feathers
+- Handle errors: Error handling, particularly with Go, is critical to overall application structure.
+- Interfaces: This allows you to focus on your application's boundaries
+- Narrow dependencies: Remove library dependencies where possible, reduce hard-coding, use dependency injection
+- Keep improving - Do this alongside feature work, don't wait for refactoring sprints
+-->
 
 ---
 layout: default
 ---
 
-# A Systematic Refactoring Mindset
-
-<ul>
-    <li v-click><bold>Start with tests</bold>: A safety net before changing anything</li>
-    <li v-click><bold>Focus on error handling</bold>: This affects the rest of your application's structure</li>
-    <li v-click><bold>Break interfaces</bold>: These define your system's boundaries</li>
-    <li v-click><bold>Reduce dependencies</bold>: Reduce hard-coding, use dependency injection</li>
-</ul>
-
-<p v-click><bold>Small steps win</bold>: Continuous improvement > dramatic changes</p>
-
-<!--
-- Start with tests: These are a guide through the entire refactoring process. Add characterization tests to capture current behavior, then refactor with confidence from Working Effectively with Legacy Code by Michael Feathers
-- Focus on error-handling: Error handling, particularly with Go, is critical to overall application structure.
-- Break interfaces: This allows you to focus on your application's boundaries
-- Reduce dependencies: Reduce hard-coding, use dependency injection
-- Small steps win
-- Preserve knowledge - encapsulate "messy" code in tests and sequester in functions
-- Continuous improvement - Do this alongside feature work, don't wait for refactoring sprints
--->
+<div class="flex justify-center">
+    <img src="./images/20.png" alt="THINK acronym with T circled" width="500px" />
+</div>
 
 ---
-layout: section
+transition: slide-left
+layout: image-right
+image: 'images/working.jpg'
 ---
 
-# Systematic Go Refactoring Examples
+# Tests
 
-<ol>
-    <li>1. Error handling </li>
-    <li>2. Large interfaces</li>
-    <li>3. Empty interface overuse</li>
-    <li>6. Tightly coupled models</li>
-    <li>4. Hard-coded business rules</li>
-    <li>5. Dependency management anti-patterns</li>
-    <li>7. Excessive parameter lists</li>
-</ol>
+- A safety net before changing anything
+- A guide to the refactoring process
+- Add characterization tests if you're missing tests
+- Working Effectively with Legacy Code by Michael Feathers
+
+---
+layout: default
+---
+
+<div class="flex justify-center">
+    <img src="./images/21.png" alt="THINK acronym with H circled" width="500px" />
+</div>
 
 ---
 transition: slide-left
 ---
 
-# Inconsistent error handling
+# Handle errors
 
-**The Problem**: Lost context, double handling, silent failures
+**The Problem**: Lost context, double handling (logging and returning an error), silent failures (no error handling at all)
 
 ```go
 // Bad: No context, inconsistent patterns
@@ -405,18 +448,30 @@ return errors.New("invalid amount")
 return fmt.Errorf("process payment: invalid amount %.2f", amount)
 ```
 
-**Go Proverb**: "Errors are values" - program with them, don't just check them
+**Go Proverb**: ["Errors are values"](https://go-proverbs.github.io/) - program with them, don't just check them
+
+**Reading**: "100 Go Mistakes" #49-52 on error handling patterns
 
 <!--
+Over time, the ways that errors are handled tend to drift
 Critical for application structure and for your debugging experience
-Reading: "100 Go Mistakes" #49-52 on error handling patterns
+**Why prioritize**: Code readability, debugging
+
 -->
+
+---
+layout: default
+---
+
+<div class="flex justify-center">
+    <img src="./images/22.png" alt="THINK acronym with I circled" width="500px" />
+</div>
 
 ---
 transition: slide-left
 ---
 
-# Large interfaces
+# Interfaces
 
 **The Problem**: Large interfaces force clients to depend on methods they don't use
 
@@ -437,18 +492,19 @@ type NotificationService interface {
 }
 ```
 
-**Go Proverb**: "The bigger the interface, the weaker the abstraction"
-**Why prioritize**: Dramatically improves testing and reduces coupling
+**Go Proverb**: ["The bigger the interface, the weaker the abstraction"](https://go-proverbs.github.io/)
+
+**Reading**: "100 Go Mistakes" #5-7 on interface design
 
 <!--
-Reading: Go Proverbs talk, "100 Go Mistakes" #5-7 on interface design
+**Why prioritize**: Dramatically improves testing and reduces coupling
 -->
 
 ---
 transition: slide-left
 ---
 
-# Overuse of empty interface{} weakening type safety
+# Interfaces
 
 **The Problem**: Using any/interface{} when specific types would be better
 
@@ -460,18 +516,56 @@ func Process(data interface{}) error
 func Process[T Processor](data T) error
 ```
 
-**Go Proverb**: "The empty interface says nothing"
+**Go Proverb**: ["The empty interface says nothing"](https://go-proverbs.github.io/)
+**Reading**: "100 Go Mistakes" #8 on any usage
 
 <!--
 Catches errors at compile time instead of runtime
-Reading: "100 Go Mistakes" #8 on any usage
+There are some use cases for this (ex. marshaling)
+**Why prioritize**: Type safety helps catch errors at compile time instead of at runtime
+-->
+
+---
+layout: default
+---
+
+<div class="flex justify-center">
+    <img src="./images/23.png" alt="THINK acronym with N circled" width="500px" />
+</div>
+
+---
+transition: slide-left
+---
+
+# Narrow dependencies
+
+**The Problem**: Adding direct dependencies increase coupling and make things hard to test
+
+```go
+// Bad: Hard to test, tightly coupled
+func ProcessOrder(customerID string, items []string) error {
+    db := sql.Open("postgres", "...") // Direct dependency
+    // ... processing logic
+}
+
+// Good: Dependency injection
+type OrderService struct {
+    repository OrderRepository
+}
+func (s *OrderService) ProcessOrder(req OrderRequest) error
+```
+
+**Why prioritize**: Make testing easier
+
+<!--
+
 -->
 
 ---
 transition: slide-left
 ---
 
-# Tightly coupled models mixing concerns
+# Narrow dependencies
 
 **The Problem**: Single structs mixing API responses, database, and validation concerns
 
@@ -498,6 +592,8 @@ type UserDB struct {      // Database model
 }
 ```
 
+**Why prioritize**: Mixed concerns make changes more difficult
+
 <!--
 Mixed concerns make evolution painful. Changing JSON structure shouldn't require database migration
 Reading: Clean Architecture principles, Domain-Driven Design
@@ -508,9 +604,9 @@ Reading: Clean Architecture principles, Domain-Driven Design
 transition: slide-left
 ---
 
-# Hard-coded business rules
+# Narrow dependencies
 
-**The Problem**: Business rule changes require code deployments instead of configuration updates
+**The Problem**: Hard-coded business rule changes require code deployments instead of configuration updates
 
 ```go
 // Bad: Business logic embedded in code
@@ -527,68 +623,40 @@ type DiscountService interface {
 }
 ```
 
-<!--
-
--->
-
----
-transition: slide-left
----
-
-# Dependency management anti-patterns
-
-**The Problem**: Adding direct dependencies increase coupling and make things hard to test
-
-```go
-// Bad: Hard to test, tightly coupled
-func ProcessOrder(customerID string, items []string) error {
-    db := sql.Open("postgres", "...") // Direct dependency
-    // ... processing logic
-}
-
-// Good: Dependency injection
-type OrderService struct {
-    repository OrderRepository
-}
-func (s *OrderService) ProcessOrder(req OrderRequest) error
-```
+**Why prioritize**: Make it easy to change your application
 
 <!--
 
 -->
 
 ---
-transition: slide-left
+layout: default
 ---
 
-# Excessive parameter lists reducing readability
+<div class="flex justify-center">
+    <img src="./images/24.png" alt="THINK acronym with K circled multiple times" width="500px" />
+</div>
 
-**The Problem**: Functions become unreadable and error-prone
+---
+layout: center
+class: text-center
+---
 
-```go
-// Bad: Too many parameters
-func ProcessOrder(customerID string, items []string, quantities []int, 
-                 prices []float64, discountRate float64, shippingMethod string,
-                 taxRate float64) error
+# Keep improving
 
-// Good: Meaningful structs
-type OrderRequest struct {
-    CustomerID string
-    Items      []OrderItem
-    Shipping   ShippingInfo
-    Pricing    PricingRules
-}
-func ProcessOrder(req OrderRequest) error
-```
+<p v-click>Refactor as you go</p>
+<p v-click>Continuously iterate and deliver value</p>
+
+
+---
+layout: quote
+---
+
+# The best software products emerge from continuous improvement, not perfect planning.
 
 <!--
-Go doesn't have named parameters, making long parameter lists especially problematic
-Reading: "100 Go Mistakes" #11 on functional options pattern
+Coming back to this from earlier :) 
 -->
-
-
-
-
 
 ---
 layout: section
@@ -636,8 +704,8 @@ The Three-Bucket Approach
 It roughly looks like this!
 
 - Add error context where missing
-- Break one large interface into focused ones  
 - Extract hardcoded values to configuration
+- Replace empty interfaces with types
 -->
 
 ---
@@ -656,6 +724,7 @@ The Three-Bucket Approach
 <!--
 It roughly looks like this!
 
+- Break one large interface into focused ones 
 - Separate tightly coupled models
 - Standardize error handling across packages
 -->
@@ -702,6 +771,7 @@ layout: default
             <li v-click>Increasing test coverage</li>
             <li v-click>Searching your codebase to find inconsistent approaches</li>
             <li v-click>Taking patterns and applying them across your codebase incrementally</li>
+            <li v-click><a href="https://github.blog/ai-and-ml/github-copilot/how-the-github-billing-team-uses-the-coding-agent-in-github-copilot-to-continuously-burn-down-technical-debt/">How the GitHub billing team uses the coding agent in GitHub Copilot to continuously burn down technical debt</a></li>
         </ul>
     </div>
     <div style="width: 70%">
@@ -710,11 +780,8 @@ layout: default
 </div>
 
 
-
-
-
 <!--
-An aside: I'm not here to sell you all on Copilot. That's not my job. But this is the tool I've used the most.
+An aside: I work at GitHub. I'm not here to sell you all on Copilot. That's not my job. But this is the tool I've used the most.
 
 My opinion on AI has changed over time.
 
@@ -731,6 +798,8 @@ layout: default
 
 > In order to build more confidence in our code changes, we should try to get as close to 100% as possible in our test coverage. Search the test files in the lib/services directory and identify if there are any paths that aren't currently tested. Create table-driven tests to cover those scenarios.
 
+[Dave Cheney: Prefer Table-Driven Tests](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests)
+
 <!--
 Note we are looking at specific folders, not the entire application
 -->
@@ -742,7 +811,7 @@ layout: default
 
 # Searching your codebase to find inconsistent approaches with the coding agent in GitHub Copilot
 
-> Use this PR as an example to swap from the Pegomock mocking library to mockery for mocks in the lib/services directory.
+> Use this PR as an example to swap from the existing mocking library to this new one for mocks in the lib/services directory.
 
 <!--
 Create the first step and ask the agent to apply it to the rest of your application (one folder at a time)
@@ -772,15 +841,37 @@ layout: section
 - Getting AI to help you: How to use agents today
 
 ---
-layout: section
+layout: quote
+---
+
+# The best software products emerge from continuous improvement, not perfect planning.
+
+<!--
+Coming back to this from earlier :) 
+-->
+
+---
+layout: default
 ---
 
 # Resources
 
-- Book: Working Effectively with Legacy Code - Michael Feathers
-- Book: 100 Go Mistakes - Teiva Harsanyi
+- Book: [Working Effectively with Legacy Code - Michael Feathers](https://learning.oreilly.com/library/view/working-effectively-with/0131177052/)
+- Book: [100 Go Mistakes - Teiva Harsanyi](https://100go.co/)
 - Video: [Go Proverbs](https://go-proverbs.github.io/)
-- Article: [GitHub blog article once posted]()
+- Article: [Dave Cheney: Prefer Table-Driven Tests](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests)
+- Article: [How the GitHub billing team uses the coding agent in GitHub Copilot to continuously burn down technical debt](https://github.blog/ai-and-ml/github-copilot/how-the-github-billing-team-uses-the-coding-agent-in-github-copilot-to-continuously-burn-down-technical-debt/)
+
+
+---
+layout: default
+---
+
+# Acknowledgements
+
+- To my incredible partner who is hanging out with our three young kids while I travel
+- To my GitHub colleagues who have given me so much feedback, advice, and motivation
+- To my brothers, including Brad Heller who is here today, who are my fellow software engineers and supporters
 
 ---
 layout: center
