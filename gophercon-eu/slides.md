@@ -31,13 +31,10 @@ Patterns and Practices for Maintaining and Evolving Large Codebases
 
 
 <div class="absolute bottom-10">
-  <span class="font-700">
+  <p class="font-700">
     Brittany Ellich, GitHub | <a href="https://brittanyellich.com" target="_blank">brittanyellich.com</a>
-  </span>
-</div>
-
-<div class="abs-br m-6 text-xl">
-  <a href="https://github.com/brittanyellich/refactoring-go" target="_blank" class="slidev-icon-btn flex items-end">
+  </p>
+  <a href="https://github.com/brittanyellich/refactoring-go" target="_blank">
     <carbon:logo-github /> brittanyellich/refactoring-go
   </a>
 </div>
