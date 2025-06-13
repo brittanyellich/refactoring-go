@@ -1,34 +1,18 @@
 ---
-# You can also start simply with 'default'
 theme: apple-basic
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
 title: Refactoring Go - Patterns and Practices for Maintaining and Evolving
   Large Codebases
 info: |
   More info at https://github.com/brittanyellich/refactoring-go
-# https://sli.dev/features/drawing
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
-# enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 layout: intro
-
-# open graph
-# seoMeta:
-#  ogImage: https://cover.sli.dev
 ---
 
 # Refactoring Go
 
 Patterns and Practices for Maintaining and Evolving Large Codebases
-
-
-
 
 <div class="absolute bottom-10">
   <p class="font-700">
@@ -408,6 +392,10 @@ layout: default
     <img src="./images/20.png" alt="THINK acronym with T circled" width="500px" />
 </div>
 
+<!--
+- Tests: A safety net before changing anything These are a guide through the entire refactoring process. Add characterization tests to capture current behavior, then refactor with confidence from Working Effectively with Legacy Code by Michael Feathers
+-->
+
 ---
 transition: slide-left
 layout: image-right
@@ -428,6 +416,10 @@ layout: default
 <div class="flex justify-center">
     <img src="./images/21.png" alt="THINK acronym with H circled" width="500px" />
 </div>
+
+<!--
+Handle errors: Error handling, particularly with Go, is critical to overall application structure.
+-->
 
 ---
 transition: slide-left
@@ -514,6 +506,7 @@ func Process[T Processor](data T) error
 ```
 
 **Go Proverb**: ["The empty interface says nothing"](https://go-proverbs.github.io/)
+
 **Reading**: "100 Go Mistakes" #8 on any usage
 
 <!--
@@ -529,6 +522,10 @@ layout: default
 <div class="flex justify-center">
     <img src="./images/23.png" alt="THINK acronym with N circled" width="500px" />
 </div>
+
+<!--
+- Narrow dependencies: Remove library dependencies where possible, reduce hard-coding, use dependency injection
+-->
 
 ---
 transition: slide-left
@@ -634,6 +631,10 @@ layout: default
     <img src="./images/24.png" alt="THINK acronym with K circled multiple times" width="500px" />
 </div>
 
+<!--
+- Keep improving - Do this alongside feature work, don't wait for refactoring sprints
+-->
+
 ---
 layout: center
 class: text-center
@@ -643,6 +644,7 @@ class: text-center
 
 <p v-click>Refactor as you go</p>
 <p v-click>Continuously iterate and deliver value</p>
+<p v-click>Don't wait for an occasional refactoring sprint</p>
 
 
 ---
@@ -808,11 +810,12 @@ layout: default
 
 # Searching your codebase to find inconsistent approaches with the coding agent in GitHub Copilot
 
-> Use this PR as an example to swap from the existing mocking library to this new one for mocks in the lib/services directory.
+> We would like to standardize on the following error handling specification for errors in the lib/services directory. Help me identify anywhere that we are not currently handling errors in this way in this directory and update them to use this syntax, with reasonable error messages to support them.
 
-<!--
-Create the first step and ask the agent to apply it to the rest of your application (one folder at a time)
--->
+```go
+return fmt.Errorf("failed to process payment for order %s: %w", orderID, err)
+```
+
 
 ---
 layout: default
@@ -820,11 +823,13 @@ layout: default
 
 # Taking patterns and applying them across your codebase incrementally
 
-> We would like to standardize on the following error handling specification for errors in the lib/services directory. Help me identify anywhere that we are not currently handling errors in this way in this directory and update them to use this syntax, with reasonable error messages to support them.
+> Use this PR as an example to swap from the existing mocking library to this new one for mocks in the lib/services directory.
 
-```go
-return fmt.Errorf("failed to process payment for order %s: %w", orderID, err)
-```
+<!--
+Create the first step and ask the agent to apply it to the rest of your application (one folder at a time)
+-->
+
+
 
 ---
 layout: section
@@ -833,7 +838,7 @@ layout: section
 # Recap
 
 - Refactor, don't rewrite: The top 3 arguments and why they're wrong
-- How to refactor: A systematic refactoring method
+- How to refactor: A systematic refactoring method (THINK)
 - How to prioritize your refactoring efforts: Focus on impact
 - Getting AI to help you: How to use agents today
 
@@ -851,6 +856,18 @@ Coming back to this from earlier :)
 layout: default
 ---
 
+# Acknowledgements
+
+- My incredible partner who is hanging out with our three young kids while I travel
+- The incredible team putting this conference together
+- My GitHub colleagues who have given me so much feedback, advice, and motivation
+- Bill Kennedy, who suggested that I should submit a talk to this conference
+- My brother, Brad Heller who is here today!
+
+---
+layout: default
+---
+
 # Resources
 
 - Book: [Working Effectively with Legacy Code - Michael Feathers](https://learning.oreilly.com/library/view/working-effectively-with/0131177052/)
@@ -859,22 +876,15 @@ layout: default
 - Article: [Dave Cheney: Prefer Table-Driven Tests](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests)
 - Article: [How the GitHub billing team uses the coding agent in GitHub Copilot to continuously burn down technical debt](https://github.blog/ai-and-ml/github-copilot/how-the-github-billing-team-uses-the-coding-agent-in-github-copilot-to-continuously-burn-down-technical-debt/)
 
-
----
-layout: default
----
-
-# Acknowledgements
-
-- To my incredible partner who is hanging out with our three young kids while I travel
-- To my GitHub colleagues who have given me so much feedback, advice, and motivation
-- To my brothers, including Brad Heller who is here today, who are my fellow software engineers and supporters
-
----
-layout: center
-class: text-center
----
-
-# Thank you!
+## Thank you!
 
 My website is [brittanyellich.com](https://brittanyellich.com), let's be internet friends!
+
+<a href="https://github.com/brittanyellich" target="_blank">
+    <carbon:logo-github />
+</a>
+
+<a href="https://www.linkedin.com/in/brittanyellich/" target="_blank">
+    <carbon:logo-linkedin />
+</a>
+
